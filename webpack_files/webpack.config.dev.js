@@ -57,11 +57,6 @@ plugins: [
       filename: 'index.html',
       hash: false,
       template: './public/index.html'
-    }),
-    new HtmlWebpackPlugin({
-      title: 'About Page',
-      filename: 'about.html',
-      template: './public/about.html'
     })
   ]
 }
