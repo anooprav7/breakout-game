@@ -1,11 +1,18 @@
-<b>Breakout Game <\b>
+#Breakout Game
+*Completely built in Vanilla JS*
 
+##Run the Game locally
+After cloning the repository locally
+- Download dependencies
+`yarn install`
+- Run the dev server (game by default runs at http://http://localhost:5555/)
+`yarn start`
 
-TODOS
-* Add WIN check - DONE
-  * Game over screen - DONE
-  * Lives reduced continue screen - DONE
-  * Start game screen - DONE
+##TODOS
+-[x] Add WIN check - DONE
+  -[x] Game over screen - DONE
+  -[x] Lives reduced continue screen - DONE
+  -[x] Start game screen - DONE
 * Better brick collision Collision - DONE
 * Better ball to paddle collision logic - DONE
 * Add Responsive Mobile UI
@@ -16,5 +23,3 @@ TODOS
 * Design TODOS
   * Rounded corners in paddle
   * Redesign Brick shapes
-* Webpack
-  * reduce html size
