@@ -1,7 +1,7 @@
-#Breakout Game
+# Breakout Game
 *Completely built in Vanilla JS*
 
-##Run the Game locally
+## Run the Game locally
 After cloning the repository locally
 - Download dependencies
 `yarn install`
