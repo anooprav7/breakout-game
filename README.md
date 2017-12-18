@@ -5,7 +5,7 @@
 After cloning the repository locally
 - Download dependencies
 `yarn install`
-- Run the dev server (game by default runs at http://http://localhost:5555/)
+- Run the dev server (game by default runs at http://localhost:5555/)
 `yarn start`
 
 ##TODOS
