@@ -20,7 +20,6 @@ let bricks = [], ball, paddle;
 let rightPressed= false, leftPressed= false;
 
 //Event Listeners
-/* OLD
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 
@@ -30,8 +29,6 @@ function keyDownHandler(e) {
   } else if (e.keyCode == 37) {
     leftPressed = true;
   }
-  else if(e.keyCode == 32 && !gameStarted)
-    gameStarted = true;
 }
 function keyUpHandler(e) {
   if (e.keyCode == 39) {
@@ -41,11 +38,12 @@ function keyUpHandler(e) {
   }
 }
 
-*/
+
+/*
 function keyListener(){
   let pressedKeys = [];
-  let keydown = function(e) { this.pressedKeys[e.keyCode] = true };
-  let keyup = function(e) { this.pressedKeys[e.keyCode] = false };
+  let keydown = function(e) { pressedKeys[e.keyCode] = true };
+  let keyup = function(e) { pressedKeys[e.keyCode] = false };
   document.addEventListener("keydown", keydown );
   document.addEventListener("keyup", keyup );
 }
@@ -53,7 +51,7 @@ keyListener.prototype.isPressed = function(key){
   return this.pressedKeys[key] ? true : false;
 };
 let keys = new keyListener();
-
+*/
 /******************************************************************************
 * Initialisations
 *
@@ -80,7 +78,7 @@ function initializeBricks(levelNo){ bricksHelper.initializeBricks(bricks, levelN
 function initializePaddleAndBall(){
   let paddleWidth= boardWidth/5, paddleHeight= 10, paddleSpeed= 11;
   ball = {
-    x: boardWidth/2, y: boardHeight/2, r: 10, col: 'blue', dx: 1, dy: 8
+    x: boardWidth/2, y: boardHeight/2, r: 10, col: 'blue', dx: 1, dy: -8
   };
   paddle = {
     height: paddleHeight, width: paddleWidth,
@@ -117,9 +115,25 @@ function draw(){
 function motion(){
   ball.x += ball.dx;
   ball.y += ball.dy;
-  if(keys.isPressed(39) && paddle.x + paddle.width < boardWidth) { paddle.x += paddle.speed;}
-  if(keys.isPressed(37) && paddle.x > 0) { paddle.x -= paddle.speed;}
+  if(rightPressed && paddle.x + paddle.width < boardWidth) { paddle.x += paddle.speed;}
+  if(leftPressed && paddle.x > 0) { paddle.x -= paddle.speed;}
 }
+
+/******************************************************************************
+* CollisionDetection
+*
+*
+******************************************************************************/
+function CollisionDetection(){
+  if( CDHelper.ballCeiling(ball) ) ball.dy = -ball.dy;
+  if( CDHelper.ballLeftRightWall(ball, boardWidth) ) ball.dx = -ball.dx;
+  if(CDHelper.ballGround(ball, boardHeight)) document.location.reload();
+  if(CDHelper.ballPaddleCollision(ball, paddle)) ball.dy = -ball.dy;
+
+}
+
+
+
 
 /******************************************************************************
 * Lifecycle Methods
@@ -130,6 +144,8 @@ function gameStart(){
   drawHelper.drawText(ctx, 'PRESS THE [SPACEBAR] TO START A NEW GAME', boardWidth/2, (boardHeight/2)-30, 'center', "16px Arial", 'white');
   drawHelper.drawText(ctx, 'MOVE THE PADDLE WITH < ARROW > KEYS ', boardWidth/2, 2*boardHeight/3, 'center', "14px Arial", 'white');
   draw();
+  if(rightPressed || leftPressed)
+    gameState = GAME_RUNNING;
 }
 
 function displayGameOver(){
@@ -149,9 +165,6 @@ function continueGame(){
 
 
 
-
-
-
 function loop(){
 
 }
@@ -165,6 +178,8 @@ function checkGameStateAndRender(){
       gameStart();
       break;
     case GAME_RUNNING:
+      draw();
+      motion();
       break;
     case GAME_OVER_WON:
       break;
@@ -174,8 +189,8 @@ function checkGameStateAndRender(){
       console.log('Unknown Game State');
   }
 
-  //CollisionDetection();
-  //requestAnimationFrame(draw);
+  CollisionDetection();
+  requestAnimationFrame(checkGameStateAndRender);
 }
 
 function InitializeGame(){
