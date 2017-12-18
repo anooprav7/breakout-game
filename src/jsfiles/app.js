@@ -200,10 +200,8 @@ function InitializeGame(){
   initializePaddleAndBall();
 
   checkGameStateAndRender();
-  //requestAnimationFrame(draw);
 }
 
 window.onload = function() {
   InitializeGame();
-
 }

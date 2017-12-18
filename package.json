@@ -1,5 +1,5 @@
 {
-  "name": "Breakout Game built in Pure JS",
+  "name": "breakout_game",
   "version": "1.0.0",
   "main": "app.js",
   "author": "anooprav7",

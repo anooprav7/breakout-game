@@ -62,7 +62,7 @@ module.exports = {
                     minimize: true
                     //,sourceMap:true
                 }
-              },{ 
+              },{
                 loader: "sass-loader"
               }
               ]
@@ -92,11 +92,6 @@ plugins: [
       filename: 'index.html',
       hash: false,
       template: './public/index.html'
-    }),
-    new HtmlWebpackPlugin({  
-      title: 'About Page',
-      filename: 'about.html',
-      template: './public/about.html'
     })
   ]
 }
