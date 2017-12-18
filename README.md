@@ -9,10 +9,10 @@ After cloning the repository locally
 `yarn start`
 
 ##TODOS
--[x] Add WIN check - DONE
-  -[x] Game over screen - DONE
-  -[x] Lives reduced continue screen - DONE
-  -[x] Start game screen - DONE
+[x] Add WIN check - DONE
+  [x] Game over screen - DONE
+  [x] Lives reduced continue screen - DONE
+  [x] Start game screen - DONE
 * Better brick collision Collision - DONE
 * Better ball to paddle collision logic - DONE
 * Add Responsive Mobile UI
