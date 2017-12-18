@@ -6,7 +6,7 @@ import * as bricksHelper from './brickLevelsHelper';
 import { GAME_START, GAME_RUNNING, GAME_OVER_WON, GAME_OVER_LOST } from './constants';
 
 //Game Variables
-let gameState = GAME_START; //0-StartScreen 1-GameProgressing  2-WON 3-LOST
+let gameState = GAME_START;
 let lives= 3, score= 0;
 
 // canvas variables
@@ -37,21 +37,6 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
-
-
-/*
-function keyListener(){
-  let pressedKeys = [];
-  let keydown = function(e) { pressedKeys[e.keyCode] = true };
-  let keyup = function(e) { pressedKeys[e.keyCode] = false };
-  document.addEventListener("keydown", keydown );
-  document.addEventListener("keyup", keyup );
-}
-keyListener.prototype.isPressed = function(key){
-  return this.pressedKeys[key] ? true : false;
-};
-let keys = new keyListener();
-*/
 /******************************************************************************
 * Initialisations
 *
@@ -127,8 +112,16 @@ function motion(){
 function CollisionDetection(){
   if( CDHelper.ballCeiling(ball) ) ball.dy = -ball.dy;
   if( CDHelper.ballLeftRightWall(ball, boardWidth) ) ball.dx = -ball.dx;
-  if(CDHelper.ballGround(ball, boardHeight)) document.location.reload();
-  if(CDHelper.ballPaddleCollision(ball, paddle)) ball.dy = -ball.dy;
+  if( CDHelper.ballGround(ball, boardHeight) ){
+    lives--;
+    if(lives < 1) gameState = GAME_OVER_LOST;
+  }
+  if( CDHelper.ballPaddleCollision(ball, paddle) ) ball.dy = -ball.dy;
+  if( CDHelper.ballBrickGrid(ball, bricks) ){
+    score++;
+    if( bricks.length == 0)
+      gameState = GAME_OVER_WON;
+  }
 
 }
 
@@ -182,6 +175,8 @@ function checkGameStateAndRender(){
       motion();
       break;
     case GAME_OVER_WON:
+      draw();
+      console.log('WON');
       break;
     case GAME_OVER_LOST:
       break;
