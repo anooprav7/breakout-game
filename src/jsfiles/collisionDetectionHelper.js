@@ -29,8 +29,14 @@ export function ballBrickGrid(ball, bricks){
   }
 }
 function ballBrick(Ball, Brick){
-  if((Ball.y >= Brick.y) && (Ball.y <= Brick.y + Brick.h) &&
-    (Ball.x >= Brick.x) && (Ball.x <= Brick.x + Brick.w) ){
-      return true;
+  if(
+      ( ((Ball.y+Ball.r >= Brick.y) && (Ball.y+Ball.r <= Brick.y + Brick.h))
+          || ((Ball.y-Ball.r >= Brick.y) && (Ball.y-Ball.r <= Brick.y + Brick.h))
+      ) &&
+      ( ((Ball.x+Ball.r >= Brick.x) && (Ball.x+Ball.r <= Brick.x + Brick.w))
+          || ((Ball.x-Ball.r >= Brick.x) && (Ball.x-Ball.r <= Brick.x + Brick.w))
+      )
+   ){
+       return true;
 }
 }

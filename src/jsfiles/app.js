@@ -3,7 +3,7 @@ import './_import_assets';
 import * as drawHelper from './drawHelpers';
 import * as CDHelper from './collisionDetectionHelper';
 import * as bricksHelper from './brickLevelsHelper';
-import { GAME_START, GAME_RUNNING, GAME_OVER_WON, GAME_OVER_LOST } from './constants';
+import { GAME_START, GAME_RUNNING, GAME_LOST_LIFE_PAUSED, GAME_OVER_WON, GAME_OVER_LOST } from './constants';
 
 //Game Variables
 let gameState = GAME_START;
@@ -115,6 +115,7 @@ function CollisionDetection(){
   if( CDHelper.ballGround(ball, boardHeight) ){
     lives--;
     if(lives < 1) gameState = GAME_OVER_LOST;
+    else gameState = GAME_LOST_LIFE_PAUSED;
   }
   if( CDHelper.ballPaddleCollision(ball, paddle) ) ball.dy = -ball.dy;
   if( CDHelper.ballBrickGrid(ball, bricks) ){
@@ -124,9 +125,6 @@ function CollisionDetection(){
   }
 
 }
-
-
-
 
 /******************************************************************************
 * Lifecycle Methods
@@ -140,48 +138,56 @@ function gameStart(){
   if(rightPressed || leftPressed)
     gameState = GAME_RUNNING;
 }
-
-function displayGameOver(){
-  drawHelper.drawText(ctx, 'GAME OVER', boardWidth/2, boardHeight/2, 'center', '30px Arial', 'white');
-  gameStarted = false;
+function gameRunning(){
+  draw();
+  motion();
 }
-function continueGame(){
-  ball.x= boardWidth/2;
-  ball.y= boardHeight - 50;
-  ball.dx = 2;
+function gamePaused_lostLife(){
+  ball.x = boardWidth/2;
+  ball.y = boardHeight/2;
   ball.dy = -8;
+  ball.dx = 1;
   paddle.x = (boardWidth - paddle.width)/2;
+  draw();
+  drawHelper.drawText(ctx, 'GAME PAUSED', boardWidth/2, boardHeight/2 - 50, 'center', '30px Arial', 'white');
+  if(rightPressed || leftPressed)
+    gameState = GAME_RUNNING;
 }
 
-
-
-
-
-
-function loop(){
-
+function gameOver_Won(){
+  ctx.clearRect(0, 0, boardWidth, boardHeight);
+  drawHelper.drawText(ctx, 'GAME WON', boardWidth/2, boardHeight/2, 'center', '30px Arial', 'white');
+}
+function gameOver_Lost(){
+  ctx.clearRect(0, 0, boardWidth, boardHeight);
+  drawHelper.drawText(ctx, 'GAME LOST', boardWidth/2, boardHeight/2, 'center', '30px Arial', 'white');
 }
 
-
+/******************************************************************************
+* Initial Starting and State Methods
+*
+*
+******************************************************************************/
 
 function checkGameStateAndRender(){
-
   switch (gameState) {
     case GAME_START:
       gameStart();
       break;
     case GAME_RUNNING:
-      draw();
-      motion();
+      gameRunning();
+      break;
+    case GAME_LOST_LIFE_PAUSED:
+      gamePaused_lostLife();
       break;
     case GAME_OVER_WON:
-      draw();
-      console.log('WON');
+      gameOver_Won();
       break;
     case GAME_OVER_LOST:
+      gameOver_Lost();
       break;
     default:
-      console.log('Unknown Game State');
+      console.log('UNKNOWN GAME STATE');
   }
 
   CollisionDetection();
