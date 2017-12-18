@@ -1,0 +1,15 @@
+@import './_variables';
+@import './_normalizations';
+
+body{
+  display: flex;
+  align-items: center;
+}
+
+canvas {
+  background-color: #333333;
+  display: block;
+  margin: 0 auto;
+  border: 3px solid #BCAA7B;
+  box-sizing: border-box;
+}
