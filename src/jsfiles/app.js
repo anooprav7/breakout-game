@@ -17,13 +17,14 @@ let boardWidth, boardHeight;
 let bricks = [], ball, paddle;
 
 //event signals
-let rightPressed= false, leftPressed= false;
+let rightPressed= false, leftPressed= false, anyKeyPressed = false;
 
 //Event Listeners
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 
 function keyDownHandler(e) {
+  anyKeyPressed = true;
   if (e.keyCode == 39) {
     rightPressed = true;
   } else if (e.keyCode == 37) {
@@ -31,6 +32,7 @@ function keyDownHandler(e) {
   }
 }
 function keyUpHandler(e) {
+  anyKeyPressed = false;
   if (e.keyCode == 39) {
     rightPressed = false;
   } else if (e.keyCode == 37) {
@@ -87,8 +89,8 @@ function drawPaddle(){ drawHelper.drawRectangle(ctx, paddle.x, paddle.y, paddle.
 function drawScoreLives(){
   const textSize = 0.025 * boardHeight;
   const textY = (0.04 * boardHeight);
-  drawHelper.drawText(ctx, 'Lives - '+lives, textSize, textY, 'left', textSize+'px Arial', 'white');
-  drawHelper.drawText(ctx, 'Score - '+score, (boardWidth - textSize), textY, 'right', textSize+'px Arial', 'white');
+  drawHelper.drawText(ctx, 'Balls: '+lives, textSize, textY, 'left', textSize+'px Arial', 'white');
+  drawHelper.drawText(ctx, 'Score: '+score, (boardWidth - textSize), textY, 'right', textSize+'px Arial', 'white');
 }
 function draw(){
   ctx.clearRect(0, 0, boardWidth, boardHeight);
@@ -132,10 +134,10 @@ function CollisionDetection(){
 *
 ******************************************************************************/
 function gameStart(){
-  drawHelper.drawText(ctx, 'PRESS THE [SPACEBAR] TO START A NEW GAME', boardWidth/2, (boardHeight/2)-30, 'center', "16px Arial", 'white');
-  drawHelper.drawText(ctx, 'MOVE THE PADDLE WITH < ARROW > KEYS ', boardWidth/2, 2*boardHeight/3, 'center', "14px Arial", 'white');
   draw();
-  if(rightPressed || leftPressed)
+  drawHelper.drawText(ctx, 'PRESS ANY KEY TO START A NEW GAME', boardWidth/2, (boardHeight/2)-30, 'center', "16px Arial", 'white');
+  drawHelper.drawText(ctx, 'MOVE THE PADDLE WITH < ARROW > KEYS ', boardWidth/2, 2*boardHeight/3, 'center', "14px Arial", 'white');
+  if(anyKeyPressed)
     gameState = GAME_RUNNING;
 }
 function gameRunning(){
@@ -149,18 +151,25 @@ function gamePaused_lostLife(){
   ball.dx = 1;
   paddle.x = (boardWidth - paddle.width)/2;
   draw();
-  drawHelper.drawText(ctx, 'GAME PAUSED', boardWidth/2, boardHeight/2 - 50, 'center', '30px Arial', 'white');
-  if(rightPressed || leftPressed)
+  drawHelper.drawText(ctx, 'YOU HAVE '+lives+( lives>1 ?' BALLS':' BALL')+ ' LEFT', boardWidth/2, boardHeight/2 - 50, 'center', '30px Arial', 'white');
+  drawHelper.drawText(ctx, 'Press ANY KEY to Continue', boardWidth/2, boardHeight/2+40, 'center', '20px Arial', 'white');
+  if(anyKeyPressed)
     gameState = GAME_RUNNING;
 }
 
 function gameOver_Won(){
   ctx.clearRect(0, 0, boardWidth, boardHeight);
   drawHelper.drawText(ctx, 'GAME WON', boardWidth/2, boardHeight/2, 'center', '30px Arial', 'white');
+  drawHelper.drawText(ctx, 'Press ANY KEY to RESTART', boardWidth/2, boardHeight/2+40, 'center', '20px Arial', 'white');
+  if(anyKeyPressed)
+    document.location.reload();
 }
 function gameOver_Lost(){
   ctx.clearRect(0, 0, boardWidth, boardHeight);
   drawHelper.drawText(ctx, 'GAME LOST', boardWidth/2, boardHeight/2, 'center', '30px Arial', 'white');
+    drawHelper.drawText(ctx, 'Press ANY KEY to RESTART', boardWidth/2, boardHeight/2+40, 'center', '20px Arial', 'white');
+  if(anyKeyPressed)
+    document.location.reload();
 }
 
 /******************************************************************************

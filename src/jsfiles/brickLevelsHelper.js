@@ -5,7 +5,7 @@ export function initializeBricks(bricks, levelNo, boardWidth, boardHeight){
   let brickWidth = boardWidth / 10 - (brickGapX +1),
     brickHeight = 0.024 *boardHeight;
   let brickGapY = (0.4 * brickHeight);
-  const no_bricks = 10;
+  const no_bricks = 50;
   let colorList = ["#18582b","#0c905d","#00c78e","#33dbff","#3375ff","#5733ff","#FF7043", "#607D8B", "#E91E63", "#3F51B5"];
 
   let brick;
