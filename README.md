@@ -1,5 +1,6 @@
 # Breakout Game
 *Completely built in Vanilla JS*
+Play the game here - https://anooprav7.github.io/breakout-game/
 
 ## Run the Game locally
 After cloning the repository locally
