@@ -20,5 +20,21 @@ export function drawText(ctx, text, x, y, textAlign, font, fillStyle){
   ctx.font = font;
   ctx.textAlign = textAlign;
   ctx.fillStyle = fillStyle;
+  ctx.strokeStyle = fillStyle;
   ctx.fillText(text, x, y);
+}
+
+export function drawRoundedReactangle(ctx, x, y, width, height, fillStyle, borderRadius){
+  ctx.beginPath();
+  ctx.lineJoin = "round";
+  ctx.lineWidth = borderRadius;
+  ctx.fillStyle = fillStyle;
+  ctx.strokeStyle = fillStyle;
+
+  // Change origin and dimensions to match true size (a stroke makes the shape a bit larger)
+  ctx.strokeRect(x+(borderRadius/2), y+(borderRadius/2), width-borderRadius, height-borderRadius);
+  ctx.fillRect(x+(borderRadius/2), y+(borderRadius/2), width-borderRadius, height-borderRadius);
+  //ctx.stroke();
+  //ctx.fill();
+  ctx.closePath();
 }

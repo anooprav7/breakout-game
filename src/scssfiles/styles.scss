@@ -1,6 +1,29 @@
 body{
+  //background: linear-gradient(to right, #000428, #004e92);
+  //background: radial-gradient(#000428, #004e92);
+  animation: colorchange-light 10s;
+  animation-iteration-count: infinite;
   display: flex;
   align-items: center;
+}
+
+@keyframes colorchange-dark
+{
+  0%   {background: #004e92;}
+  25%  {background: #000428;}
+  50%  {background: #000428;}
+  75%  {background: #000428;}
+  100% {background: #004e92;}
+}
+
+
+@keyframes colorchange-light
+{
+  0%   {background: #4B79A1;}
+  25%  {background: #CFDCE5;}
+  50%  {background: #F5F3BF;}
+  75%  {background: #CFDCE5;}
+  100% {background: #4B79A1;}
 }
 
 canvas {

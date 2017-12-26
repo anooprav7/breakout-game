@@ -65,7 +65,7 @@ function initializeBricks(levelNo){ bricksHelper.initializeBricks(bricks, levelN
 function initializePaddleAndBall(){
   let paddleWidth= boardWidth/5, paddleHeight= 10, paddleSpeed= 11;
   ball = {
-    x: boardWidth/2, y: boardHeight/2, r: 10, col: 'blue', dx: 1, dy: -8
+    x: boardWidth/2, y: boardHeight/2, r: 10, col: 'blue', dx: 1, dy: -6
   };
   paddle = {
     height: paddleHeight, width: paddleWidth,
@@ -82,10 +82,13 @@ function initializePaddleAndBall(){
 
 function drawBricks(){
   for(let i=0; i<bricks.length; i++)
-    drawHelper.drawRectangle(ctx, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h, bricks[i].color);
+//  drawHelper.drawRectangle(ctx, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h, bricks[i].color);
+    drawHelper.drawRoundedReactangle(ctx, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h, bricks[i].color, bricks[i].w/10);
 }
 function drawBall() { drawHelper.drawCircle(ctx, ball.x, ball.y, ball.r, 0, Math.PI * 2, 'white'); }
-function drawPaddle(){ drawHelper.drawRectangle(ctx, paddle.x, paddle.y, paddle.width, paddle.height, 'white'); }
+//function drawPaddle(){ drawHelper.drawRectangle(ctx, paddle.x, paddle.y, paddle.width, paddle.height, 'white'); }
+function drawPaddle(){ drawHelper.drawRoundedReactangle(ctx, paddle.x, paddle.y, paddle.width, paddle.height, 'white', paddle.width/10); }
+
 function drawScoreLives(){
   const textSize = 0.025 * boardHeight;
   const textY = (0.04 * boardHeight);
